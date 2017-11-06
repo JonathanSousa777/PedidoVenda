@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/Layout.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">#{cadastroUsuarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</ui:define>
+
+    <ui:define name="corpo">
+        <f:metadata>
+            <f:viewAction action="#{cadastroUsuarioBean.inicializar}" />
+            <o:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}"/>
+        </f:metadata>
+
+        <h1>#{cadastroUsuarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</h1>
+
+        <h:form id="frm-usuario">
+            <p:messages id="messages" />
+
+            <p:toolbar styleClass="toolbar-cadastro">
+                <p:toolbarGroup>
+                    <p:button value="Novo" outcome="/cadastros/CadastroUsuario" icon="fa fa-plus" 
+                              style="margin-right: 5px;"/>
+                    <p:commandButton value="Salvar" icon="fa fa-save" action="#{cadastroUsuarioBean.salvar}" update="frm-usuario" />
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right">
+                    <p:button value="Pesquisa" outcome="/pesquisas/PesquisaUsuario" icon="fa fa-search" />
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panelGrid columns="2" columnClasses="rotulo campo" styleClass="grid-cadastro">
+                <p:outputLabel value="Nome" for="nome" />
+                <p:inputText id="nome" size="60" maxlength="60" value="#{cadastroUsuarioBean.usuario.nome}"/>
+
+                <p:outputLabel value="CPF" for="cpf" />
+                <p:inputMask id="cpf" mask="999.999.999-99" size="60" maxlength="15" value="#{cadastroUsuarioBean.usuario.cpf}"
+                             validatorMessage="CPF inválido (000.000.000-00)"/>
+
+                <p:outputLabel value="E-mail" for="email" />
+                <p:inputText id="email" size="60" maxlength="60" value="#{cadastroUsuarioBean.usuario.email}"/>
+
+                <p:outputLabel value="Senha" for="senha" />
+                <p:password id="senha" maxlength="20" value="#{cadastroUsuarioBean.usuario.senha}" feedback="true" match="confirmacaoSenha"
+                            weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" promptLabel="Informe uma senha"
+                            validatorMessage="Senha inválida." redisplay="true"/>
+
+                <p:outputLabel value="Confirmação de senha" for="confirmacaoSenha" />
+                <p:password id="confirmacaoSenha" required="true" requiredMessage="É necessário confirmar a senha."
+                            redisplay="true" value="#{cadastroUsuarioBean.usuario.senha}"/>
+            </p:panelGrid>
+
+            <p:commandButton value="Adicionar grupo" icon="fa fa-plus" style="margin: 15px 5px 8px 0px;" update="grupoTable selectOneMenuGrupo" 
+                             process="@this selectOneMenuGrupo" action="#{cadastroUsuarioBean.adicionarGrupo}"/>
+            <p:selectOneMenu id="selectOneMenuGrupo" value="#{cadastroUsuarioBean.grupoSelecionado}" style="position: absolute; margin-top: 15px;">
+                <f:selectItem itemLabel="Selecione um grupo..."/>
+                <f:selectItems value="#{cadastroUsuarioBean.listaGrupos}" var="grupo" itemLabel="#{grupo.nome}"
+                               itemValue="#{grupo}" />
+            </p:selectOneMenu>
+
+            <p:dataTable id="grupoTable" value="#{cadastroUsuarioBean.gruposUsuario}" var="grupo" rows="10"
+                         paginator="true" paginatorAlwaysVisible="false" style="margin-top: 8px;"
+                         emptyMessage="Nenhum registro encontrado" >
+
+                <p:column headerText="Nome">
+                    <h:outputText value="#{grupo.nome}" />
+                </p:column>
+
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{grupo.descricao}" />
+                </p:column>
+
+                <p:column headerText="Ação" style="width: 40px; text-align: center;">
+                    <p:commandButton title="Excluir" action="#{cadastroUsuarioBean.removerGrupo}" update="grupoTable" process="@this"
+                                     icon="ui-icon-trash">
+                        <f:setPropertyActionListener value="#{grupo}" target="#{cadastroUsuarioBean.grupoSelecionado}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

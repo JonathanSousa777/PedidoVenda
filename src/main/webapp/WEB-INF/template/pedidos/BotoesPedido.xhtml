@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" >
+
+    <p:toolbar styleClass="toolbar-cadastro" >
+        <p:toolbarGroup>
+            <p:button value="Novo" outcome="/pedidos/CadastroPedido" icon="fa fa-plus"
+                      style="margin-right: 5px;"/>
+            <p:commandButton value="Salvar" action="#{cadastroPedidoBean.salvar}" icon="fa fa-save" />
+        </p:toolbarGroup>
+
+        <p:toolbarGroup align="right">
+            <p:commandButton value="Emitir" icon="fa fa-check-circle" />
+            <p:commandButton value="Cancelar" icon="fa fa-ban"/>
+            <p:commandButton value="Enviar por e-mail"  icon="fa fa-envelope-o"/>
+
+            <p:separator />
+
+            <p:button value="Pesquisa" outcome="/pedidos/PesquisaPedido" icon="fa fa-search"  />
+        </p:toolbarGroup>
+    </p:toolbar>
+
+</ui:composition>

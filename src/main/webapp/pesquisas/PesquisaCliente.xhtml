@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/Layout.xhtml">
+
+    <ui:define name="titulo">Pesquisa de clientes</ui:define>
+
+    <ui:define name="corpo">
+        <h1>Pesquisa de clientes</h1>
+
+        <p:toolbar styleClass="toolbar-cadastro">
+            <p:toolbarGroup>
+                <p:button value="Pesquisa" outcome="PesquisaCliente" icon="fa fa-search" />
+            </p:toolbarGroup>
+            <p:toolbarGroup align="right">
+                <p:button value="Novo" outcome="/cadastros/CadastroCliente" icon="fa fa-plus" />
+            </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:panelGrid columns="2" columnClasses="rotulo, campo" styleClass="grid-cadastro">
+            <p:outputLabel value="CPF/CNPJ" for="cpfCnpj" />
+            <p:inputText id="cpfCnpj" />
+
+            <p:outputLabel value="Nome" for="nome" />
+            <p:inputText id="nome" size="50"/>
+        </p:panelGrid>
+
+        <p:dataTable id="tabelaCliente" style="margin-top: 20px;" rows="10" paginator="true" paginatorPosition="bottom"
+                     emptyMessage="Nenhum registro foi encontrado" paginatorAlwaysVisible="false">
+
+            <p:column headerText="Nome" >
+                Supermercado João das Couves
+            </p:column>
+
+            <p:column headerText="Tipo" style="width: 180px; text-align: center;">
+                Jurídica
+            </p:column>
+
+            <p:column headerText="Documento receita federal" >
+                051.234.432.09/0001-83
+            </p:column>
+
+            <p:column styleClass="column-actions">
+                <p:commandButton icon="fa fa-pencil" title="Editar"/>
+                <p:commandButton icon="fa fa-trash" title="Excluir" oncomplete="PF('exclusaoCliente').show()"/>
+            </p:column>
+        </p:dataTable>
+
+        <p:confirmDialog header="Exclusão de cliente" widgetVar="exclusaoCliente" message="Deseja realmente excluir cliente?">
+            <p:commandButton value="Sim" icon="ui-icon-check" onsuccess="PF('exclusaoCliente').hide()" />
+            <p:button value="Não" icon="ui-icon-cancel" onclick="PF('exclusaoCliente').hide(); return false;" />
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>
