@@ -19,12 +19,12 @@
         <h:form>
             <h1>Novo Cliente</h1>
 
-            <p:messages id="messages" />
+            <p:messages id="messages" closable="true"/>
 
             <p:toolbar styleClass="toolbar-cadastro">
                 <p:toolbarGroup>
                     <p:button value="Novo" outcome="/cadastros/CadastroCliente" icon="fa fa-plus" style="margin-right: 5px;"/>
-                    <p:commandButton value="Salvar" icon="fa fa-save" action="#{cadastroClienteBean.salvar}" process="@this capaPanelGrid" update="@form messages"/>
+                    <p:commandButton value="Salvar" icon="fa fa-save" action="#{cadastroClienteBean.salvar}" process="@this capaPanelGrid" update="@form messages form-endereco:enderecoTable"/>
                 </p:toolbarGroup>
 
                 <p:toolbarGroup align="right">
@@ -56,10 +56,12 @@
             </p:panelGrid>
         </h:form>
 
-        <h:form>
-            <p:commandButton value="Adicionar endereço" icon="fa fa-plus" style="margin: 20px 0px 5px 0px;"
+        <h:form id="form-endereco">
+            <p:commandButton value="Adicionar Endereço" icon="fa fa-plus" style="margin: 20px 0px 5px 0px;"
                              oncomplete="PF('enderecoDialogWidgetVar').show()" process="@this" update="enderecoDialog"
-                             actionListener="#{cadastroClienteBean.novoEndereco}"/>
+                             actionListener="#{cadastroClienteBean.novoEndereco}">
+                <p:resetInput   target="enderecoDialog"/>
+            </p:commandButton>
 
             <p:dataTable id="enderecoTable" value="#{cadastroClienteBean.cliente.enderecos}" var="endereco"
                          paginator="true" rows="5" paginatorAlwaysVisible="false" 
@@ -86,8 +88,9 @@
                 </p:column>
 
                 <p:column style="width: 100px;">
-                    <p:commandButton icon="fa fa-pencil" title="Editar" process="@this" update="enderecoPanelGroup" onsuccess="PF('enderecoDialogWidgetVar').show()"
-                                     actionListener="#{cadastroClienteBean.editarEndereco(endereco)}"/>
+                    <p:commandButton icon="fa fa-pencil" title="Editar" process="@this" update="form-endereco:enderecoPanelGroup" onsuccess="PF('enderecoDialogWidgetVar').show()"
+                                     actionListener="#{cadastroClienteBean.editarEndereco(endereco)}">
+                    </p:commandButton>
                     <p:commandButton icon="fa fa-trash" title="Excluir" process="@this" update="enderecoTable" action="#{cadastroClienteBean.excluirEndereco(endereco)}" />
                 </p:column>
             </p:dataTable>
@@ -95,7 +98,7 @@
             <p:dialog id="enderecoDialog" widgetVar="enderecoDialogWidgetVar" modal="true" header="Cadastro de endereço" resizable="false"
                       draggable="false" closeOnEscape="true" showEffect="fade" >
                 <h:panelGroup id="enderecoPanelGroup" >
-                    <p:messages id="enderecoMessages" autoUpdate="false" />
+                    <p:messages id="enderecoMessages" autoUpdate="false" closable="true"/>
 
                     <h:panelGrid columns="2" cellpadding="3" cellspacing="2">
                         <p:outputLabel value="Logradouro" for="logradouro" />
@@ -109,7 +112,7 @@
                         <p:inputText id="complemento" size="40" value="#{cadastroClienteBean.endereco.complemento}"/>
 
                         <p:outputLabel value="CEP" for="cep" />
-                        <p:inputText id="cep" size="20" value="#{cadastroClienteBean.endereco.cep}"/>
+                        <p:inputMask id="cep" size="20" value="#{cadastroClienteBean.endereco.cep}" mask="99.999-999"/>
 
                         <p:outputLabel value="Cidade" for="cidade" />
                         <h:panelGroup>
@@ -121,7 +124,7 @@
                         <br/>
                         <p:commandButton icon="fa fa-plus" value="#{cadastroClienteBean.editantoEndereco? 'Alterar' : 'Incluir'}" 
                                          action="#{cadastroClienteBean.confirmarEndereco()}" ignoreAutoUpdate="true" 
-                                         process="enderecoPanelGroup" update="enderecoMessages enderecoTable" 
+                                         process="enderecoPanelGroup" update="enderecoPanelGroup enderecoTable" 
                                          oncomplete="if (!args.validationFailed) PF('enderecoDialogWidgetVar').hide()"/>
                     </h:panelGrid>
                 </h:panelGroup>
