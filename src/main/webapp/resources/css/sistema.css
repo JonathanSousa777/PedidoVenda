@@ -66,10 +66,6 @@ menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-lis
     color: #ffffff !important;
 }
 
-.menu-sistema .ui-icon-triangle-1-s {
-    background: url(#{resource['images:seta-para-baixo.png']}) no-repeat;
-}
-
 .hellow-user {
     float: left;
     height: 30px;

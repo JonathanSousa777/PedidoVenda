@@ -30,7 +30,6 @@ public class CadastroClienteBean implements Serializable {
     public void limpar() {
         cliente = new Cliente();
         this.cliente.setTipo(TipoPessoa.FISICA);
-        System.out.println("limpou");
     }
 
     public TipoPessoa[] getTiposPessoas() {
@@ -54,7 +53,6 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public void novoEndereco() {
-        System.out.println("novo endereco");
         this.endereco = new Endereco();
         this.endereco.setCliente(this.cliente);
         this.editandoEndereco = false;
@@ -62,9 +60,7 @@ public class CadastroClienteBean implements Serializable {
 
     public void confirmarEndereco() {
         if (!this.cliente.getEnderecos().contains(this.endereco)) {
-            System.out.println("comparou");
             this.cliente.getEnderecos().add(this.endereco);
-            System.out.println("adicionou na lista");
         }
     }
 

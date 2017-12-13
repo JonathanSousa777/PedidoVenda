@@ -86,8 +86,8 @@ public class Endereco implements Serializable {
         this.uf = uf;
     }
 
-    @NotBlank @Size(max = 9)
-    @Column(nullable = false, length = 9)
+    @NotBlank @Size(max = 15)
+    @Column(nullable = false, length = 15)
     public String getCep() {
         return cep;
     }
