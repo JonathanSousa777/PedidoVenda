@@ -8,49 +8,54 @@
     <ui:define name="titulo">Pesquisa de clientes</ui:define>
 
     <ui:define name="corpo">
-        <h1>Pesquisa de clientes</h1>
+        <h:form id="frmPesquisar">
+            <h1>Pesquisa de clientes</h1>
 
-        <p:toolbar styleClass="toolbar-cadastro">
-            <p:toolbarGroup>
-                <p:button value="Pesquisa" outcome="PesquisaCliente" icon="fa fa-search" />
-            </p:toolbarGroup>
-            <p:toolbarGroup align="right">
-                <p:button value="Novo" outcome="/cadastros/CadastroCliente" icon="fa fa-plus" />
-            </p:toolbarGroup>
-        </p:toolbar>
+            <p:toolbar styleClass="toolbar-cadastro">
+                <p:toolbarGroup>
+                    <p:commandButton value="Pesquisar" icon="fa fa-search" action="#{pesquisaClienteBean.pesquisar()}"
+                                     process="@form" update="@form"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Novo" outcome="/cadastros/CadastroCliente" icon="fa fa-plus" />
+                </p:toolbarGroup>
+            </p:toolbar>
 
-        <p:panelGrid columns="2" columnClasses="rotulo, campo" styleClass="grid-cadastro">
-            <p:outputLabel value="CPF/CNPJ" for="cpfCnpj" />
-            <p:inputText id="cpfCnpj" />
+            <p:panelGrid columns="2" columnClasses="rotulo, campo" styleClass="grid-cadastro">
+                <p:outputLabel value="Nome" for="nome" />
+                <p:inputText id="nome" size="50" value="#{pesquisaClienteBean.clienteFilter.nome}"/>
 
-            <p:outputLabel value="Nome" for="nome" />
-            <p:inputText id="nome" size="50"/>
-        </p:panelGrid>
+                <p:outputLabel value="CPF/CNPJ" for="documentoReceitaFederal" id="documentoReceitaFederalLabel"/>
+                <p:inputText id="documentoReceitaFederal" size="40" maxlength="14" value="#{pesquisaClienteBean.clienteFilter.documentoReceitaFederal}" 
+                             placeholder="999.999.999-99 ou 999.999.999/9999-99"/>
+            </p:panelGrid>
 
-        <p:dataTable id="tabelaCliente" style="margin-top: 20px;" rows="10" paginator="true" paginatorPosition="bottom"
-                     emptyMessage="Nenhum registro foi encontrado" paginatorAlwaysVisible="false">
+            <p:dataTable id="tabelaCliente" style="margin-top: 20px;" rows="10" paginator="true" paginatorPosition="bottom"
+                         emptyMessage="Nenhum registro foi encontrado" paginatorAlwaysVisible="false"
+                         value="#{pesquisaClienteBean.clientesFiltrados}" var="cliente">
 
-            <p:column headerText="Nome" >
-                Supermercado João das Couves
-            </p:column>
+                <p:column headerText="Nome" >
+                    <h:outputText value="#{cliente.nome}" />
+                </p:column>
 
-            <p:column headerText="Tipo" style="width: 180px; text-align: center;">
-                Jurídica
-            </p:column>
+                <p:column headerText="Tipo" style="width: 180px; text-align: center;">
+                    <h:outputText value="#{cliente.tipo.descricao}" />
+                </p:column>
 
-            <p:column headerText="Documento receita federal" >
-                051.234.432.09/0001-83
-            </p:column>
+                <p:column headerText="Documento receita federal" >
+                    <h:outputText value="#{cliente.documentoReceitaFederal}" />
+                </p:column>
 
-            <p:column styleClass="column-actions">
-                <p:commandButton icon="fa fa-pencil" title="Editar"/>
-                <p:commandButton icon="fa fa-trash" title="Excluir" oncomplete="PF('exclusaoCliente').show()"/>
-            </p:column>
-        </p:dataTable>
+                <p:column styleClass="column-actions">
+                    <p:commandButton icon="fa fa-pencil" title="Editar"/>
+                    <p:commandButton icon="fa fa-trash" title="Excluir" oncomplete="PF('exclusaoCliente').show()"/>
+                </p:column>
+            </p:dataTable>
 
-        <p:confirmDialog header="Exclusão de cliente" widgetVar="exclusaoCliente" message="Deseja realmente excluir cliente?">
-            <p:commandButton value="Sim" icon="ui-icon-check" onsuccess="PF('exclusaoCliente').hide()" />
-            <p:button value="Não" icon="ui-icon-cancel" onclick="PF('exclusaoCliente').hide(); return false;" />
-        </p:confirmDialog>
+            <p:confirmDialog header="Exclusão de cliente" widgetVar="exclusaoCliente" message="Deseja realmente excluir cliente?">
+                <p:commandButton value="Sim" icon="ui-icon-check" onsuccess="PF('exclusaoCliente').hide()" />
+                <p:button value="Não" icon="ui-icon-cancel" onclick="PF('exclusaoCliente').hide(); return false;" />
+            </p:confirmDialog>
+        </h:form>
     </ui:define>
 </ui:composition>
