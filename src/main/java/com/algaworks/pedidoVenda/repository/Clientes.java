@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -24,6 +25,16 @@ public class Clientes implements Serializable {
 
     public Cliente porId(Long id) {
         return manager.find(Cliente.class, id);
+    }
+
+    public Cliente porDocumentoReceitaFederal(String documentoReceitaFederal) {
+        try {
+            return manager.createQuery("from Cliente where doc_receita_federal : documentoReceitaFederal", Cliente.class)
+                    .setParameter("documentoReceitaFederal", documentoReceitaFederal)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public List<Cliente> flitrados(ClienteFilter clienteFilter) {

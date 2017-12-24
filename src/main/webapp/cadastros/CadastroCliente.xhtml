@@ -6,13 +6,14 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="/WEB-INF/template/Layout.xhtml">
+                template="/WEB-INF/template/Layout.xhtml"
+                xmlns:o="http://omnifaces.org/ui">
 
     <ui:define name="titulo">Cadastro de Clientes</ui:define>
 
     <ui:define name="corpo">
         <f:metadata>
-            <f:viewAction action="#{cadastroClienteBean.inicializar}" />
+            <o:viewParam name="cliente" value="#{cadastroClienteBean.cliente}" />
         </f:metadata>
 
         <h:form>
@@ -94,7 +95,7 @@
                 </p:column>
             </p:dataTable>
 
-            <p:dialog id="enderecoDialog" widgetVar="enderecoDialogWidgetVar" modal="true" header="Cadastro de endereço" resizable="false"
+            <p:dialog id="enderecoDialog" widgetVar="enderecoDialogWidgetVar" modal="true" header="Cadastro Endereço" resizable="false"
                       draggable="false" closeOnEscape="true" showEffect="fade" >
                 <h:panelGroup id="enderecoPanelGroup" >
                     <p:messages id="enderecoMessages" autoUpdate="false" closable="true"/>
@@ -121,7 +122,7 @@
                         </h:panelGroup>
 
                         <br/>
-                        <p:commandButton icon="fa fa-plus" value="#{cadastroClienteBean.editantoEndereco? 'Alterar' : 'Incluir'}" 
+                        <p:commandButton icon="#{cadastroClienteBean.editantoEndereco? 'fa fa-pencil' : 'fa fa-plus'}" value="#{cadastroClienteBean.editantoEndereco? 'Alterar' : 'Incluir'}" 
                                          action="#{cadastroClienteBean.confirmarEndereco()}" ignoreAutoUpdate="true" 
                                          process="enderecoPanelGroup" update="enderecoPanelGroup enderecoTable" 
                                          oncomplete="if (!args.validationFailed) PF('enderecoDialogWidgetVar').hide()"/>

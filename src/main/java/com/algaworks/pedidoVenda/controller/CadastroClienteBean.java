@@ -23,13 +23,15 @@ public class CadastroClienteBean implements Serializable {
     @Inject
     private CadastroClienteService cadastroClienteService;
 
-    public void inicializar() {
+    public CadastroClienteBean() {
         limpar();
+        System.out.println("constr");
     }
 
     public void limpar() {
         cliente = new Cliente();
         this.cliente.setTipo(TipoPessoa.FISICA);
+        System.out.println("limpou");
     }
 
     public TipoPessoa[] getTiposPessoas() {
@@ -70,6 +72,7 @@ public class CadastroClienteBean implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+        System.out.println("set");
     }
 
     public Endereco getEndereco() {
