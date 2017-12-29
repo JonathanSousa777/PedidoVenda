@@ -4,6 +4,7 @@ import com.algaworks.pedidoVenda.model.Cliente;
 import com.algaworks.pedidoVenda.model.TipoPessoa;
 import com.algaworks.pedidoVenda.repository.Clientes;
 import com.algaworks.pedidoVenda.repository.filter.ClienteFilter;
+import com.algaworks.pedidoVenda.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,20 +23,23 @@ public class PesquisaClienteBean implements Serializable {
     @Inject
     private Clientes clientes;
 
+    private Cliente clienteSelecionado;
     private ClienteFilter clienteFilter;
     private List<Cliente> clientesFiltrados;
 
     public PesquisaClienteBean() {
-        limpar();
-    }
-
-    private void limpar() {
         clienteFilter = new ClienteFilter();
-        clientesFiltrados = new ArrayList<>();
     }
 
     public void pesquisar() {
         clientesFiltrados = clientes.flitrados(clienteFilter);
+    }
+
+    public void excluir() {
+        clientes.remover(clienteSelecionado);
+        clientesFiltrados.remove(clienteSelecionado);
+
+        FacesUtil.addMessage("Cliente " + clienteSelecionado.getNome() + " excluído com sucesso!");
     }
 
     public ClienteFilter getClienteFilter() {
@@ -56,5 +60,13 @@ public class PesquisaClienteBean implements Serializable {
 
     public void setClientesFiltrados(List<Cliente> clientesFiltrados) {
         this.clientesFiltrados = clientesFiltrados;
+    }
+
+    public Cliente getClienteSelecionado() {
+        return clienteSelecionado;
+    }
+
+    public void setClienteSelecionado(Cliente clienteSelecionado) {
+        this.clienteSelecionado = clienteSelecionado;
     }
 }

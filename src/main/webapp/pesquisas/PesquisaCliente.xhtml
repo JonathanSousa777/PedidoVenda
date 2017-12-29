@@ -9,6 +9,8 @@
 
     <ui:define name="corpo">
         <h:form id="frmPesquisar">
+            <p:messages id="messages" />
+            
             <h1>Pesquisa de clientes</h1>
 
             <p:toolbar styleClass="toolbar-cadastro">
@@ -50,12 +52,16 @@
                     <p:button icon="fa fa-pencil" title="Editar" outcome="/cadastros/CadastroCliente.xhtml">
                         <f:param name="cliente" value="#{cliente.id}" />
                     </p:button>
-                    <p:commandButton icon="fa fa-trash" title="Excluir" oncomplete="PF('exclusaoCliente').show()"/>
+                    <p:commandButton icon="fa fa-trash" title="Excluir" oncomplete="PF('exclusaoCliente').show()"
+                                     process="@this" update="frmPesquisar:exclusaoConfirmacaoDialog">
+                        <f:setPropertyActionListener value="#{cliente}" target="#{pesquisaClienteBean.clienteSelecionado}" />
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
 
-            <p:confirmDialog header="Exclusão de cliente" widgetVar="exclusaoCliente" message="Deseja realmente excluir cliente?">
-                <p:commandButton value="Sim" icon="ui-icon-check" onsuccess="PF('exclusaoCliente').hide()" />
+            <p:confirmDialog header="Exclusão de cliente" id="exclusaoConfirmacaoDialog" widgetVar="exclusaoCliente" message="Deseja realmente excluir cliente?">
+                <p:commandButton value="Sim" icon="ui-icon-check" onsuccess="PF('exclusaoCliente').hide()" action="#{pesquisaClienteBean.excluir}"
+                                 process="@this" update="frmPesquisar:tabelaCliente messages"/>
                 <p:button value="Não" icon="ui-icon-cancel" onclick="PF('exclusaoCliente').hide(); return false;" />
             </p:confirmDialog>
         </h:form>

@@ -3,6 +3,7 @@ package com.algaworks.pedidoVenda.controller;
 import com.algaworks.pedidoVenda.model.Cliente;
 import com.algaworks.pedidoVenda.model.Endereco;
 import com.algaworks.pedidoVenda.model.TipoPessoa;
+import com.algaworks.pedidoVenda.repository.Clientes;
 import com.algaworks.pedidoVenda.service.CadastroClienteService;
 import com.algaworks.pedidoVenda.util.jsf.FacesUtil;
 import java.io.Serializable;
@@ -16,6 +17,8 @@ public class CadastroClienteBean implements Serializable {
 
     @Inject
     private Cliente cliente;
+    @Inject
+    private Clientes clientes;
 
     private Endereco endereco;
     private boolean editandoEndereco;
@@ -25,13 +28,13 @@ public class CadastroClienteBean implements Serializable {
 
     public CadastroClienteBean() {
         limpar();
-        System.out.println("constr");
     }
 
     public void limpar() {
-        cliente = new Cliente();
-        this.cliente.setTipo(TipoPessoa.FISICA);
-        System.out.println("limpou");
+        if (cliente == null) {
+            cliente = new Cliente();
+            this.cliente.setTipo(TipoPessoa.FISICA);
+        }
     }
 
     public TipoPessoa[] getTiposPessoas() {
@@ -72,7 +75,6 @@ public class CadastroClienteBean implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-        System.out.println("set");
     }
 
     public Endereco getEndereco() {

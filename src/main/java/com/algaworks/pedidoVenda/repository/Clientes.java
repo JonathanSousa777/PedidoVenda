@@ -2,11 +2,14 @@ package com.algaworks.pedidoVenda.repository;
 
 import com.algaworks.pedidoVenda.model.Cliente;
 import com.algaworks.pedidoVenda.repository.filter.ClienteFilter;
+import com.algaworks.pedidoVenda.service.NegocioException;
+import com.algaworks.pedidoVenda.util.jpa.Transactional;
 import java.io.Serializable;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -27,13 +30,15 @@ public class Clientes implements Serializable {
         return manager.find(Cliente.class, id);
     }
 
-    public Cliente porDocumentoReceitaFederal(String documentoReceitaFederal) {
+    @Transactional
+    public void remover(Cliente cliente) {
         try {
-            return manager.createQuery("from Cliente where doc_receita_federal : documentoReceitaFederal", Cliente.class)
-                    .setParameter("documentoReceitaFederal", documentoReceitaFederal)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            return null;
+            cliente = porId(cliente.getId());
+            manager.remove(cliente);
+            manager.flush();
+
+        } catch (PersistenceException e) {
+            throw new NegocioException("Falha ao excluir o cliente!");
         }
     }
 

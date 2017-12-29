@@ -39,7 +39,7 @@
                 <p:outputLabel value="Email" for="email" />
                 <p:inputText id="email" size="40" value="#{cadastroClienteBean.cliente.email}"/>
 
-                <p:outputLabel value="Tipo pessoa" for="tipo" />
+                <p:outputLabel value="Tipo" for="tipo" />
                 <p:selectOneRadio id="tipo" value="#{cadastroClienteBean.cliente.tipo}">
                     <f:selectItems value="#{cadastroClienteBean.tiposPessoas}" var="tipoPessoa" 
                                    itemLabel="#{tipoPessoa.descricao}" itemValue="#{tipoPessoa}" />

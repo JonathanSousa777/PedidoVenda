@@ -13,12 +13,6 @@ public class CadastroClienteService implements Serializable {
 
     @Transactional
     public Cliente salvar(Cliente cliente) {
-        Cliente clienteExistente = clientes.porDocumentoReceitaFederal(cliente.getDocumentoReceitaFederal());
-
-        if (clienteExistente != null && !clienteExistente.equals(cliente)) {
-            throw new NegocioException("Já existe um cliente com o Documento informado.");
-        }
-
         return clientes.guardar(cliente);
     }
 }
