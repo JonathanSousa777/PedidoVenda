@@ -17,6 +17,10 @@ public class Pedidos implements Serializable {
 
     @Inject
     private EntityManager manager;
+    
+    public Pedido guardar(Pedido pedido) {
+        return manager.merge(pedido);
+    }
 
     public List<Pedido> filtrados(PedidoFilter filter) {
         Session session = manager.unwrap(Session.class);

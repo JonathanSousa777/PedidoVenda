@@ -35,6 +35,12 @@ public class Usuarios implements Serializable {
         }
     }
 
+    public List<Usuario> vendedores() {
+        //TODO filtrar apenas vendedores
+        return manager.createQuery("from Usuario", Usuario.class)
+                .getResultList();
+    }
+
     public Usuario porId(Long id) {
         return manager.find(Usuario.class, id);
     }

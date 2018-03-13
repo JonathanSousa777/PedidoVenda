@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
@@ -40,6 +39,12 @@ public class Clientes implements Serializable {
         } catch (PersistenceException e) {
             throw new NegocioException("Falha ao excluir o cliente!");
         }
+    }
+
+    public List<Cliente> porNome(String nome) {
+        return this.manager.createQuery("from Cliente where upper(nome)like :nome", Cliente.class)
+                .setParameter("nome", nome.toUpperCase() + "%")
+                .getResultList();
     }
 
     public List<Cliente> flitrados(ClienteFilter clienteFilter) {

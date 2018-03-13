@@ -7,7 +7,7 @@
         <p:toolbarGroup>
             <p:button value="Novo" outcome="/pedidos/CadastroPedido" icon="fa fa-plus"
                       style="margin-right: 5px;"/>
-            <p:commandButton value="Salvar" action="#{cadastroPedidoBean.salvar}" icon="fa fa-save" />
+            <p:commandButton value="Salvar" action="#{cadastroPedidoBean.salvar}" icon="fa fa-save" update="@form"/>
         </p:toolbarGroup>
 
         <p:toolbarGroup align="right">
