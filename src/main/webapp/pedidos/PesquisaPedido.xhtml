@@ -30,8 +30,8 @@
 
                 <p:outputLabel value="Data de criação" for="firstDate" />
                 <h:panelGroup>
-                    <p:calendar id="firstDate" pattern="dd/MM/yyyy" size="10" value="#{pesquisaPedidosBean.filter.dataCriacaoDe}"/> a
-                    <p:calendar pattern="dd/MM/yyyy" size="10" value="#{pesquisaPedidosBean.filter.dataCriacaoAte}"/>
+                    <p:calendar id="firstDate" pattern="dd/MM/yyyy" size="10" value="#{pesquisaPedidosBean.filter.dataCriacaoDe}" locale="pt"/> a
+                    <p:calendar pattern="dd/MM/yyyy" size="10" value="#{pesquisaPedidosBean.filter.dataCriacaoAte}" locale="pt"/>
                 </h:panelGroup>
 
                 <p:outputLabel value="Vendedor" for="vendedor" />
@@ -80,11 +80,18 @@
                 </p:column>
 
                 <p:column>
-                    <p:commandButton icon="fa fa-pencil" title="Editar" class="td-button"/>
+                    <p:button icon="fa fa-pencil" title="Editar" class="td-button" outcome="/pedidos/CadastroPedido">
+                        <f:param name="pedido" value="#{pedido.id}" />
+                    </p:button>
                     <p:commandButton icon="fa fa-trash" title="Excluir"/>
                 </p:column>
 
             </p:dataTable>
+
+            <script>
+                PrimeFaces.locales['pt'] = { closeText: 'Fechar', prevText: 'Anterior', nextText: 'Próximo', currentText: 'Começo', monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Só Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mês', week: 'Semana', day: 'Dia', allDayText : 'Todo o Dia' };
+            </script>
         </h:form>
     </ui:define>
+
 </ui:composition>

@@ -21,6 +21,10 @@ public class Pedidos implements Serializable {
     public Pedido guardar(Pedido pedido) {
         return manager.merge(pedido);
     }
+    
+    public Pedido porId(Long id) {
+        return manager.find(Pedido.class, id);
+    }
 
     public List<Pedido> filtrados(PedidoFilter filter) {
         Session session = manager.unwrap(Session.class);

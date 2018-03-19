@@ -62,6 +62,10 @@ public class CadastroPedidoBean implements Serializable {
         FacesUtil.addMessage("Pedido salvo com sucesso.");
     }
 
+    public boolean isEditando() {
+        return this.pedido.getId() != null;
+    }
+
     public Pedido getPedido() {
         return pedido;
     }
