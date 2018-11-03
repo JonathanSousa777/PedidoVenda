@@ -99,6 +99,17 @@ public class CadastroPedidoBean implements Serializable {
         return existeItem;
     }
 
+    public void atualizarQuantidade(ItemPedido item, int indexLinha) {
+        if (item.getQuantidade() < 1) {
+            if (indexLinha == 0) {
+                item.setQuantidade(1);
+            } else {
+                this.getPedido().getItens().remove(indexLinha);
+            }
+        }
+        this.pedido.recalcularValorTotal();
+    }
+
     public void limpar() {
         pedido = new Pedido();
         pedido.setEnderecoEntrega(new EnderecoEntrega());
