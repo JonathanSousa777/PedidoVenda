@@ -37,21 +37,23 @@
         <p:outputLabel value="Valor frete" for="valorFrete" />
         <p:inputText id="valorFrete" size="10" maxlength="10" styleClass="moeda"
                      value="#{cadastroPedidoBean.pedido.valorFrete}">
-            <f:convertNumber locale="pt" />
+            <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+            <p:ajax update="#{p:component('tabelaItems')}"/>
         </p:inputText>
 
         <p:outputLabel value="Subtotal" styleClass="bold"/>
-        <h:outputText value="R$ 0,00" styleClass="bold" />
+        <h:outputText value="#{cadastroPedidoBean.pedido.valorSubtotal}" styleClass="bold" id="outputSubtotal"/>
 
         <p:outputLabel value="Valor de desconto" for="valorDesconto"/>
         <p:inputText id="valorDesconto" size="10" maxlength="10" styleClass="bold moeda"
                      value="#{cadastroPedidoBean.pedido.valorDesconto}">
             <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+            <p:ajax update="#{p:component('tabelaItems')}"/>
         </p:inputText>
 
         <p:outputLabel value="Total pedido" style="font-size: 15px;" styleClass="bold"/>
         <h:outputText value="#{cadastroPedidoBean.pedido.valorTotal}" style="font-size: 15px;"
-                      styleClass="bold">
+                      styleClass="bold" id="outputTotal">
             <f:convertNumber type="currency"/>
         </h:outputText>
     </p:panelGrid>

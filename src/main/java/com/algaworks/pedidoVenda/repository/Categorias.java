@@ -12,7 +12,7 @@ public class Categorias implements Serializable {
     private EntityManager manager;
 
     public List<Categoria> raizes() {
-        return manager.createQuery("from Categoria where categoriaPai is null", Categoria.class).getResultList();
+        return manager.createQuery("from Categoria c where c.categoriaPai is null", Categoria.class).getResultList();
     }
 
     public Categoria porId(Long id) {
