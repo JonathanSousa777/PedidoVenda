@@ -49,6 +49,7 @@ public class CadastroPedidoBean implements Serializable {
 
     public void inicializar() {
         this.pedido = new Pedido();
+        this.pedido.setEnderecoEntrega(new EnderecoEntrega());
         this.pedido.adicionarItemVazio();
         if (FacesUtil.isNotPostback()) {
             this.vendedores = new ArrayList<>();
@@ -72,7 +73,7 @@ public class CadastroPedidoBean implements Serializable {
             if (produtoLinhaEditavel != null) {
                 item.setProduto(produtoLinhaEditavel);
                 item.setValorUnitario(produtoLinhaEditavel.getValorUnitario());
-
+                item.setQuantidade(1);
                 this.pedido.adicionarItemVazio();
                 this.produtoLinhaEditavel = null;
                 this.pedido.recalcularValorTotal();
@@ -120,8 +121,13 @@ public class CadastroPedidoBean implements Serializable {
     }
 
     public void salvar() {
-        this.pedido = cadastroPedidoService.salvar(pedido);
-        FacesUtil.addMessage("Pedido salvo com sucesso.");
+        this.pedido.removerItemVazio();
+        try {
+            this.pedido = cadastroPedidoService.salvar(pedido);
+            FacesUtil.addMessage("Pedido salvo com sucesso.");
+        } finally {
+            this.pedido.adicionarItemVazio();
+        }
     }
 
     public boolean isEditando() {

@@ -10,7 +10,7 @@
         }
     </style>
 
-        <p:dataTable value="#{cadastroPedidoBean.pedido.itens}" var="item" id="tabelaItems" rowIndexVar="linha">
+    <p:dataTable value="#{cadastroPedidoBean.pedido.itens}" var="item" id="tabelaItems" rowIndexVar="linha">
         <p:column headerText="SKU" style="text-align: center; width: 100px;">
             <h:outputText value="#{item.produto.sku}" rendered="#{item.produtoAssociado}"/>
 
@@ -41,8 +41,16 @@
             </p:spinner>
         </p:column>
 
-        <p:column headerText="Estoque" style="text-align: center; width: 100px;">
-            <h:outputText value="#{item.quantidade}" />
+        <p:column headerText="Estoque" style="text-align: center; width: 100px">
+            <h:outputText value="#{item.produto.quantidadeEstoque}" 
+                          style="#{item.estoqueInsuficiente ? 'color: red' : ''}"/>
+
+            <h:graphicImage library="images" name="alerta.png" id="semEstoque"
+                            style="vertical-align: bottom; margin-left: 5px" 
+                            rendered="#{item.estoqueInsuficiente}" />
+
+            <p:tooltip for="semEstoque" value="Estoque insuficiente"
+                       rendered="#{item.estoqueInsuficiente}" />
         </p:column>
 
         <p:column headerText="Valor total" style="text-align: right; width: 100px;">

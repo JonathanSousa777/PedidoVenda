@@ -73,6 +73,7 @@ public class ItemPedido implements Serializable {
     @Transient
     public BigDecimal getValorTotal() {
         if (this.getValorUnitario() != null) {
+            this.setQuantidade(this.getQuantidade() == null ? 1 : this.getQuantidade());
             return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
         } else {
             this.setValorUnitario(BigDecimal.ZERO);
@@ -83,6 +84,16 @@ public class ItemPedido implements Serializable {
     @Transient
     public boolean isProdutoAssociado() {
         return this.getProduto() != null && this.getProduto().getId() != null;
+    }
+
+    @Transient
+    public boolean isEstoqueSuficiente() {
+        return this.pedido.isEmitido() || this.getProduto().getId() == null || (this.getProduto().getId() != null && this.getProduto().getQuantidadeEstoque() >= this.getQuantidade());
+    }
+
+    @Transient
+    public boolean isEstoqueInsuficiente() {
+        return !this.isEstoqueSuficiente();
     }
 
     @Override

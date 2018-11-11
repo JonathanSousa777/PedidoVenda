@@ -40,6 +40,7 @@ public class Pedido implements Serializable {
     private Cliente cliente;
     private EnderecoEntrega enderecoEntrega;
     private List<ItemPedido> itens = new ArrayList<>();
+    private boolean valorTotalNegativo;
 
     @Id
     @GeneratedValue
@@ -205,7 +206,6 @@ public class Pedido implements Serializable {
         if (isOrcamento()) {
             Produto produto = new Produto();
             ItemPedido item = new ItemPedido();
-            item.setQuantidade(1);
             item.setProduto(produto);
             item.setPedido(this);
             this.getItens().add(0, item);
@@ -215,6 +215,27 @@ public class Pedido implements Serializable {
     @Transient
     public boolean isOrcamento() {
         return StatusPedido.ORCAMENTO.equals(this.getStatus());
+    }
+
+    @Transient
+    public boolean isValorTotalNegativo() {
+        return this.getValorTotal().compareTo(BigDecimal.ZERO) < 0;
+    }
+
+    @Transient
+    boolean isEmitido() {
+        return StatusPedido.EMITIDO.equals(this.getStatus());
+    }
+
+    public void setValorTotalNegativo(boolean valorTotalNegativo) {
+        this.valorTotalNegativo = valorTotalNegativo;
+    }
+
+    public void removerItemVazio() {
+        ItemPedido primeiroItem = this.getItens().get(0);
+        if (primeiroItem != null && primeiroItem.getProduto().getId() == null) {
+            this.getItens().remove(0);
+        }
     }
 
     @Override

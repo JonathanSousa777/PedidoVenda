@@ -23,7 +23,7 @@
         </p:selectOneMenu>
 
         <p:outputLabel value="Cliente" for="cliente" />
-        <p:autoComplete id="cliente" size="40" value="#{cadastroPedidoBean.pedido.cliente}" dropdown="true"
+        <p:autoComplete id="cliente" size="40" value="#{cadastroPedidoBean.pedido.cliente}"
                         completeMethod="#{cadastroPedidoBean.completarCliente}"
                         var="cliente" itemValue="#{cliente}" itemLabel="#{cliente.nome}" forceSelection="true"/>
 
