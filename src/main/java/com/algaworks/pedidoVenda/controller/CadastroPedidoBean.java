@@ -16,6 +16,8 @@ import com.algaworks.pedidoVenda.validation.SKU;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Produces;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,23 +39,30 @@ public class CadastroPedidoBean implements Serializable {
     @Inject
     private CadastroPedidoService cadastroPedidoService;
 
-    private String sku;
+    @Produces
+    @PedidoEdicao
     private Pedido pedido;
+
+    private String sku;
     private Produto produtoLinhaEditavel;
     private List<Usuario> vendedores;
     private List<ItemPedido> listItens;
 
     public CadastroPedidoBean() {
-        limpar();
+        if (pedido == null || pedido.getId() == null) {
+            limpar();
+        }
     }
 
     public void inicializar() {
-        this.pedido = new Pedido();
-        this.pedido.setEnderecoEntrega(new EnderecoEntrega());
-        this.pedido.adicionarItemVazio();
         if (FacesUtil.isNotPostback()) {
             this.vendedores = new ArrayList<>();
             this.vendedores = usuarios.vendedores();
+        }
+        if (pedido == null || pedido.getId() == null) {
+            this.pedido = new Pedido();
+            this.pedido.setEnderecoEntrega(new EnderecoEntrega());
+            this.pedido.adicionarItemVazio();
         }
     }
 
@@ -80,6 +89,10 @@ public class CadastroPedidoBean implements Serializable {
                 this.sku = null;
             }
         }
+    }
+    
+    public void pedidoAlterado(@Observes PedidoAlteradoEvent pedidoAlteradoEvent) {
+        this.pedido = pedidoAlteradoEvent.getPedido();
     }
 
     public void carregarProdutoPorSku() {

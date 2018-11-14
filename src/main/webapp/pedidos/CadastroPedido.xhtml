@@ -17,7 +17,7 @@
         <h:form id="formCadastroPedido">
             <h1>#{cadastroPedidoBean.editando ? "Edição de Pedido" : "Novo Pedido"}</h1>
 
-            <p:messages autoUpdate="true" closable="true"/>
+            <p:messages autoUpdate="true" closable="true" id="messages"/>
 
             <ui:include src="/WEB-INF/template/pedidos/BotoesPedido.xhtml" />
             <ui:include src="/WEB-INF/template/pedidos/CapaPedido.xhtml" />

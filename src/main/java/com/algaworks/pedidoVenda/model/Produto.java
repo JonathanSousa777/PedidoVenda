@@ -1,5 +1,6 @@
 package com.algaworks.pedidoVenda.model;
 
+import com.algaworks.pedidoVenda.service.NegocioException;
 import com.algaworks.pedidoVenda.validation.SKU;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -38,7 +39,8 @@ public class Produto implements Serializable {
         this.id = id;
     }
 
-    @NotBlank @Size(max = 80)
+    @NotBlank
+    @Size(max = 80)
     @Column(nullable = false, length = 80)
     public String getNome() {
         return nome;
@@ -48,7 +50,8 @@ public class Produto implements Serializable {
         this.nome = nome;
     }
 
-    @NotBlank @SKU
+    @NotBlank
+    @SKU
     @Column(nullable = false, unique = true, length = 40)
     public String getSku() {
         return sku;
@@ -87,6 +90,14 @@ public class Produto implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public void baixarEstoque(Integer quantidade) {
+        int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
+        if (novaQuantidade < 0) {
+            throw new NegocioException("Não há disponibilidade no estoque de " + quantidade + " itens do produto " + this.getSku() + ".");
+        }
+        this.setQuantidadeEstoque(novaQuantidade);
     }
 
     @Override
