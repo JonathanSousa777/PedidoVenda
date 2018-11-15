@@ -192,7 +192,7 @@ public class Pedido implements Serializable {
 
     public void recalcularValorTotal() {
         BigDecimal total = BigDecimal.ZERO;
-        total = total.add(this.getValorFrete().subtract(this.getValorDesconto()));
+        total = total.add(getValorFrete().subtract(getValorDesconto()));
 
         for (ItemPedido item : this.getItens()) {
             if (item.getProduto() != null && item.getProduto().getId() != null) {
@@ -250,6 +250,16 @@ public class Pedido implements Serializable {
     @Transient
     public boolean isCancelado() {
         return StatusPedido.CANCELADO.equals(this.getStatus());
+    }
+
+    @Transient
+    public boolean isAlteravel() {
+        return isOrcamento();
+    }
+
+    @Transient
+    public boolean isNaoAlteravel() {
+        return !this.isAlteravel();
     }
 
     public void setValorTotalNegativo(boolean valorTotalNegativo) {

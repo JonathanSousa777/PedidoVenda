@@ -35,7 +35,7 @@
         </p:column>
 
         <p:column headerText="Quantidade" style="text-align: center; width: 100px;">
-            <p:spinner min="0" size="6" value="#{item.quantidade}">
+            <p:spinner min="0" size="6" value="#{item.quantidade}" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
                 <p:ajax event="change" process="@this" update="tabelaItems :formCadastroPedido:outputTotal :formCadastroPedido:outputSubtotal"
                         listener="#{cadastroPedidoBean.atualizarQuantidade(item, linha)}"/>
             </p:spinner>

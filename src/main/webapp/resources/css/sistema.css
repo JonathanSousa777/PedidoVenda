@@ -23,6 +23,10 @@ h1 {
     text-align: center;
 }
 
+.ui-state-disabled {
+    opacity: .80 !important;
+}
+
 /*AJAX Status*/
 .ajax-status {
     position: fixed;

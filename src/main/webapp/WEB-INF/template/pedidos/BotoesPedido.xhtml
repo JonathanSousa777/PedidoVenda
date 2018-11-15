@@ -7,12 +7,12 @@
         <p:toolbarGroup>
             <p:button value="Novo" outcome="/pedidos/CadastroPedido" icon="fa fa-plus"
                       style="margin-right: 5px;"/>
-            <p:commandButton value="Salvar" action="#{cadastroPedidoBean.salvar}" icon="fa fa-save" update="@form"/>
+            <p:commandButton value="Salvar" action="#{cadastroPedidoBean.salvar}" icon="fa fa-save" update="@form" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}"/>
         </p:toolbarGroup>
 
         <p:toolbarGroup align="right">
-            <p:commandButton value="Emitir" icon="fa fa-check-circle" action="#{emissaoPedidoBean.emitirPedido}" process="@form" update="@form"/>
-            <p:commandButton value="Cancelar" icon="fa fa-ban" action="#{cancelamentoPedidoBean.cancelarPedido}" process="@this" update="@form"/>
+            <p:commandButton value="Emitir" icon="fa fa-check-circle" action="#{emissaoPedidoBean.emitirPedido}" process="@form" update="@form" disabled="#{cadastroPedidoBean.pedido.naoEmissivel}"/>
+            <p:commandButton value="Cancelar" icon="fa fa-ban" action="#{cancelamentoPedidoBean.cancelarPedido}" process="@this" update="@form" disabled="#{cadastroPedidoBean.pedido.naoCancelavel}"/>
             <p:commandButton value="Enviar por e-mail"  icon="fa fa-envelope-o"/>
 
             <p:separator />

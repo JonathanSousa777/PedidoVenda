@@ -17,28 +17,28 @@
         <h:outputText value="#{cadastroPedidoBean.pedido.status.descicao}" />
 
         <p:outputLabel value="Vendedor" for="vendedor" />
-        <p:selectOneMenu id="vendedor" value="#{cadastroPedidoBean.pedido.vendedor}">
+        <p:selectOneMenu id="vendedor" value="#{cadastroPedidoBean.pedido.vendedor}" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
             <f:selectItem itemLabel="Selecione..." />
             <f:selectItems value="#{cadastroPedidoBean.vendedores}" var="vendedor" itemValue="#{vendedor}" itemLabel="#{vendedor.nome}"/>
         </p:selectOneMenu>
 
         <p:outputLabel value="Cliente" for="cliente" />
-        <p:autoComplete id="cliente" size="40" value="#{cadastroPedidoBean.pedido.cliente}"
+        <p:autoComplete id="cliente" size="40" value="#{cadastroPedidoBean.pedido.cliente}" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}"
                         completeMethod="#{cadastroPedidoBean.completarCliente}"
                         var="cliente" itemValue="#{cliente}" itemLabel="#{cliente.nome}" forceSelection="true"/>
 
         <p:outputLabel value="Forma de pagamento" for="formaPagamento" />
-        <p:selectOneMenu id="formaPagamento" value="#{cadastroPedidoBean.pedido.formaPagamento}">
+        <p:selectOneMenu id="formaPagamento" value="#{cadastroPedidoBean.pedido.formaPagamento}" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
             <f:selectItem itemLabel="Selecione..." />
             <f:selectItems value="#{cadastroPedidoBean.formasPagamento}" var="formaPagamento" itemLabel="#{formaPagamento.descricao}"
                            itemValue="#{formaPagamento}"/>
         </p:selectOneMenu>
 
         <p:outputLabel value="Valor frete" for="valorFrete" />
-        <p:inputText id="valorFrete" size="10" maxlength="10" styleClass="moeda"
+        <p:inputText id="valorFrete" size="10" maxlength="10" styleClass="moeda" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}"
                      value="#{cadastroPedidoBean.pedido.valorFrete}">
             <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
-            <p:ajax update="#{p:component('tabelaItems')} formCadastroPedido:outputSubtotal formCadastroPedido:outputTotal"/>
+            <p:ajax update="#{p:component('tabelaItems')} formCadastroPedido:outputSubtotal formCadastroPedido:outputTotal" listener="#{cadastroPedidoBean.pedido.recalcularValorTotal()}"/>
         </p:inputText>
 
         <p:outputLabel value="Subtotal" styleClass="bold"/>
@@ -47,10 +47,10 @@
         </h:outputText>
 
         <p:outputLabel value="Valor de desconto" for="valorDesconto"/>
-        <p:inputText id="valorDesconto" size="10" maxlength="10" styleClass="bold moeda"
+        <p:inputText id="valorDesconto" size="10" maxlength="10" styleClass="bold moeda" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}"
                      value="#{cadastroPedidoBean.pedido.valorDesconto}">
             <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
-            <p:ajax update="#{p:component('tabelaItems')} formCadastroPedido:outputSubtotal formCadastroPedido:outputTotal"/>
+            <p:ajax update="#{p:component('tabelaItems')} formCadastroPedido:outputSubtotal formCadastroPedido:outputTotal" listener="#{cadastroPedidoBean.pedido.recalcularValorTotal()}"/>
         </p:inputText>
 
         <p:outputLabel value="Total pedido" style="font-size: 15px;" styleClass="bold"/>
