@@ -71,7 +71,9 @@ public class Produto implements Serializable {
         this.valorUnitario = valorUnitario;
     }
 
-    @NotNull(message = "é obrigatório") @Min(0) @Max(9999)
+    @NotNull(message = "é obrigatório")
+    @Min(0)
+    @Max(9999)
     @Column(name = "quantidade_estoque", nullable = false, length = 20)
     public Integer getQuantidadeEstoque() {
         return quantidadeEstoque;
@@ -98,6 +100,10 @@ public class Produto implements Serializable {
             throw new NegocioException("Não há disponibilidade no estoque de " + quantidade + " itens do produto " + this.getSku() + ".");
         }
         this.setQuantidadeEstoque(novaQuantidade);
+    }
+
+    public void adicionarEstoque(Integer quantidade) {
+        this.setQuantidadeEstoque(this.getQuantidadeEstoque() + quantidade);
     }
 
     @Override

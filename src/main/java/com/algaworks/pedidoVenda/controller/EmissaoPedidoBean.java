@@ -4,13 +4,13 @@ import com.algaworks.pedidoVenda.model.Pedido;
 import com.algaworks.pedidoVenda.service.EmissaoPedidoService;
 import com.algaworks.pedidoVenda.util.jsf.FacesUtil;
 import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Event;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class EmissaoPedidoBean implements Serializable {
 
     @Inject

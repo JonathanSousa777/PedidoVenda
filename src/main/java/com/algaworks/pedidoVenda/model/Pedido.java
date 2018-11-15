@@ -223,7 +223,7 @@ public class Pedido implements Serializable {
     }
 
     @Transient
-    boolean isEmitido() {
+    public boolean isEmitido() {
         return StatusPedido.EMITIDO.equals(this.getStatus());
     }
 
@@ -235,6 +235,21 @@ public class Pedido implements Serializable {
     @Transient
     public boolean isEmissivel() {
         return this.isExistente() && this.isOrcamento();
+    }
+
+    @Transient
+    public boolean isCancelavel() {
+        return this.isExistente() && !this.isCancelado();
+    }
+
+    @Transient
+    public boolean isNaoCancelavel() {
+        return !this.isCancelavel();
+    }
+
+    @Transient
+    public boolean isCancelado() {
+        return StatusPedido.CANCELADO.equals(this.getStatus());
     }
 
     public void setValorTotalNegativo(boolean valorTotalNegativo) {

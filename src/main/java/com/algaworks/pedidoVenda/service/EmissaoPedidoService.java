@@ -3,6 +3,7 @@ package com.algaworks.pedidoVenda.service;
 import com.algaworks.pedidoVenda.model.Pedido;
 import com.algaworks.pedidoVenda.model.StatusPedido;
 import com.algaworks.pedidoVenda.repository.Pedidos;
+import com.algaworks.pedidoVenda.util.jpa.Transactional;
 import com.algaworks.pedidoVenda.util.jsf.FacesUtil;
 import java.io.Serializable;
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ public class EmissaoPedidoService implements Serializable {
     @Inject
     private EstoqueService estoqueService;
 
+    @Transactional
     public Pedido emitir(Pedido pedido) {
         pedido = cadastroPedidoService.salvar(pedido);
 
