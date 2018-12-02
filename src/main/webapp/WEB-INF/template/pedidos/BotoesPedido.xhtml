@@ -13,7 +13,7 @@
         <p:toolbarGroup align="right">
             <p:commandButton value="Emitir" icon="fa fa-check-circle" action="#{emissaoPedidoBean.emitirPedido}" process="@form" update="@form" disabled="#{cadastroPedidoBean.pedido.naoEmissivel}"/>
             <p:commandButton value="Cancelar" icon="fa fa-ban" action="#{cancelamentoPedidoBean.cancelarPedido}" process="@this" update="@form" disabled="#{cadastroPedidoBean.pedido.naoCancelavel}"/>
-            <p:commandButton value="Enviar por e-mail"  icon="fa fa-envelope-o"/>
+            <p:commandButton value="Enviar por e-mail"  icon="fa fa-envelope-o" action="#{envioPedidoEmailBean.enviarPedido()}" process="@this" disabled="#{envioPedidoEmailBean.pedido.naoEnviavelPorEmail}"/>
 
             <p:separator />
 
